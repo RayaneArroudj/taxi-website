@@ -71,7 +71,7 @@ export default function ReservationSection() {
   return (
     <div className="relative bg-cover bg-center h-[600px]" style={{ backgroundImage: `url("/lyon2.webp")` }}>
 
-      <SectionTitle>Commander votre taxi :</SectionTitle>
+      <SectionTitle className='text-white'>Commander votre taxi :</SectionTitle>
       <Card className="w-11/12 md:w-4/5 lg:w-3/4 xl:w-5/6 2xl:w-11/12 mx-auto shadow-lg">
   <CardContent className="p-6">
           <AnimatePresence>

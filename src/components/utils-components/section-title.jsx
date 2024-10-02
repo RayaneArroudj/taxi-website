@@ -12,7 +12,7 @@ export default function SectionTitle({
       className={cn(
         "text-3xl font-bold text-center my-8",
         "text-foreground dark:text-foreground",
-        "transition-colors duration-200",
+        "transition-colors  duration-200 ",
         className
       )}
       {...props}
