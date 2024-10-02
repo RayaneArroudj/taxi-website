@@ -1,9 +1,12 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { IoIosMail } from "react-icons/io";
-import Divider from "../utils-components/divider";
-import FormTitle from "../utils-components/form-title";
-import SubmitButton from "../utils-components/submit-button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function ContactInformations({
   submitIdentificationInformations,
@@ -11,54 +14,72 @@ export default function ContactInformations({
   reference,
 }) {
   return (
-    <>
-      <motion.form
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={{ duration: 0.5 }}
-        onSubmit={submitIdentificationInformations}
-        className="flex flex-col lg:w-4/6 gap-5 h-[374px] justify-between"
-        ref={reference}
-      >
-        <FormTitle>Informations de contact</FormTitle>
-        {/* SECTION EMAIL ET TELEPHONE */}
-        <div className="flex flex-col gap-11">
-          <span className="flex justify-center gap-2 items-center">
-            <IoIosMail className="size-5" />
-            <input
-              type="email"
-              placeholder="Adresse email"
-              name="email"
-              required
-              className="border-b w-10/12 pl-1 border-b-blue-500"
-            />
-          </span>
-          <span className="flex justify-center gap-2 items-center">
-            <BsFillTelephoneOutboundFill className="size-5" />
-            <input
-              type="tel"
-              placeholder="Numéro de téléphone"
-              name="telephone"
-              required
-              className="border-b w-10/12 pl-1 border-b-blue-500"
-            />
-          </span>
-        </div>
-        <div className="flex flex-col gap-5">
-          <Divider />
-          {/* VALIDATION DU DEUXIEME FORMULAIRE */}
-          <div className="flex justify-end mb-2">
-            <button
-              onClick={modificateButton}
-              className="border-2 w-3/12 mr-5 self-end border-orange-500 rounded-lg px-3 py-2 text-orange-500 cursor-pointer hover:bg-orange-400-500 hover:text-white"
-            >
-              Modifier
-            </button>
-            <SubmitButton>Envoyer</SubmitButton>
-          </div>
-        </div>
-      </motion.form>
-    </>
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "-100%" }}
+      transition={{ duration: 0.5 }}
+      className="w-full"
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle>Informations de contact</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={submitIdentificationInformations}
+            className="space-y-6"
+            ref={reference}
+          >
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Adresse email</Label>
+                <div className="relative">
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Adresse email"
+                    name="email"
+                    required
+                    className="pl-10"
+                  />
+                  <IoIosMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="telephone">Numéro de téléphone</Label>
+                <div className="relative">
+                  <Input
+                    id="telephone"
+                    type="tel"
+                    placeholder="Numéro de téléphone"
+                    name="telephone"
+                    required
+                    className="pl-10"
+                  />
+                  <BsFillTelephoneOutboundFill className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                </div>
+              </div>
+            </div>
+            
+            <Separator />
+            
+            <div className="flex justify-end space-x-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={modificateButton}
+                className="w-1/3"
+              >
+                Modifier
+              </Button>
+              <Button type="submit" className="w-1/3">
+                Envoyer
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

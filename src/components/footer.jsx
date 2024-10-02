@@ -1,56 +1,46 @@
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export default function Footer() {
   return (
-    <footer className="bg-white rounded-lg shadow m-4 border">
-      <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <a
-            href="/"
-            className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-          >
+    <footer className="bg-background border-t">
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/" className="flex items-center space-x-3 mb-4 sm:mb-0">
             <Image
-              className="rounded-2xl"
+              className="rounded-lg"
               src="/logo.jpg"
-              alt="logo"
+              alt="Elite Lyon Taxi logo"
               width={50}
               height={50}
             />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap">
-              Elite Lyon Taxi
-            </span>
-          </a>
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-black-500 sm:mb-0">
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                A propos
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                CGV
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Mentions Légales
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
-                Contact
-              </a>
-            </li>
-          </ul>
+            <span className="text-2xl font-semibold">Elite Lyon Taxi</span>
+          </Link>
+          <nav className="space-y-4 sm:space-y-0 sm:space-x-6">
+            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              A propos
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              CGV
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Mentions Légales
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </Link>
+          </nav>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          © 2023{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
+        <Separator className="my-8" />
+        <div className="text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()}{" "}
+          <Link href="/" className="hover:underline">
             Elite Lyon Taxi™
-          </a>
+          </Link>
           . Tous droits réservés.
-        </span>
+        </div>
       </div>
     </footer>
   );

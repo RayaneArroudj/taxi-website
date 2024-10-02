@@ -1,7 +1,23 @@
-export default function SectionTitle({ children }) {
+import React from "react";
+import { cn } from "@/lib/utils";
+
+export default function SectionTitle({
+  children,
+  className,
+  as: Component = "h2",
+  ...props
+}) {
   return (
-    <h1 className="text-black text-center mt-7 font-bold text-3xl">
+    <Component
+      className={cn(
+        "text-3xl font-bold text-center my-8",
+        "text-foreground dark:text-foreground",
+        "transition-colors duration-200",
+        className
+      )}
+      {...props}
+    >
       {children}
-    </h1>
+    </Component>
   );
 }

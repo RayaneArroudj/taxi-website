@@ -1,8 +1,9 @@
-"use client";
+'use client'
+import React, { useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { useToast } from "@/hooks/use-toast"
 import { sendEmail } from "../../../actions/sendEmail";
+import { Card, CardContent } from "@/components/ui/card";
 import SectionTitle from "../utils-components/section-title";
 import SlideComponent from "../utils-components/slide-component";
 import ContactInformations from "./contact-informations";
@@ -12,7 +13,7 @@ export default function ReservationSection() {
   const [transportType, setTransportType] = useState(null);
   const [isFirstFormSubmitted, setIsFirstFormSubmitted] = useState(false);
   const [data, setData] = useState({});
-
+  const { toast } = useToast();
   const reference = useRef(null);
 
   const submitTansportInformations = (e) => {
@@ -44,19 +45,19 @@ export default function ReservationSection() {
     const { error } = await sendEmail(updatedData);
 
     if (error) {
-      toast.error(error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: error,
+      });
       return;
     }
 
-    if (data?.error) {
-      toast.error(data.error);
-      return;
-    }
-
-    toast.success(
-      "Votre demande à bien été envoyée, un chauffeur vous contactera par téléphone pour valider votre prise en charge, merci pour votre confiance !",
-      { duration: 5000 }
-    );
+    toast({
+      title: "Succès",
+      description: "Votre demande a bien été envoyée. Un chauffeur vous contactera par téléphone pour valider votre prise en charge. Merci pour votre confiance !",
+      duration: 5000,
+    });
     reference.current?.reset();
     setIsFirstFormSubmitted(false);
     setData({});
@@ -68,40 +69,33 @@ export default function ReservationSection() {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("/lyon2.webp")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "600px",
-      }}
-      className="flex flex-col gap-5"
-    >
+    <div className="relative bg-cover bg-center h-[600px]" style={{ backgroundImage: `url("/lyon2.webp")` }}>
+
       <SectionTitle>Commander votre taxi :</SectionTitle>
-      <div className="flex flex-col gap-5 opacity-95 bg-white w-11/12 lg:w-4/6 lg:items-center  place-self-center py-5 px-2 border-2 rounded shadow-inner h-[450px]">
-        <AnimatePresence>
-          {!isFirstFormSubmitted ? (
-            <TransportInformations
-              submitTansportInformations={submitTansportInformations}
-              setTransportType={setTransportType}
-              transportType={transportType}
-              data={data}
-              reference={reference}
-            />
-          ) : (
-            <ContactInformations
-              submitIdentificationInformations={
-                submitIdentificationInformations
-              }
-              modificateButton={modificateButton}
-              reference={reference}
-            />
-          )}
-        </AnimatePresence>
-        <div className="flex justify-center gap-5">
-          <SlideComponent isFirstFormSubmitted={isFirstFormSubmitted} />
-        </div>
-      </div>
+      <Card className="w-11/12 md:w-4/5 lg:w-3/4 xl:w-5/6 2xl:w-11/12 mx-auto shadow-lg">
+  <CardContent className="p-6">
+          <AnimatePresence>
+            {!isFirstFormSubmitted ? (
+              <TransportInformations
+                submitTansportInformations={submitTansportInformations}
+                setTransportType={setTransportType}
+                transportType={transportType}
+                data={data}
+                reference={reference}
+              />
+            ) : (
+              <ContactInformations
+                submitIdentificationInformations={submitIdentificationInformations}
+                modificateButton={modificateButton}
+                reference={reference}
+              />
+            )}
+          </AnimatePresence>
+          <div className="flex justify-center gap-5 mt-4">
+            <SlideComponent isFirstFormSubmitted={isFirstFormSubmitted} />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
