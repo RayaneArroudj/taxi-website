@@ -18,8 +18,6 @@ const NavItem = ({ href, children, onClick }) => (
   </Link>
 );
 
-
-
 export default function Header() {
   const { setTheme, theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,11 +38,6 @@ export default function Header() {
               Elite-Lyon-Taxi
             </span>
           </Link>
-          <nav className="ml-6 hidden md:flex items-center space-x-6 text-sm font-medium">
-            <NavItem href="/about">À propos</NavItem>
-            <NavItem href="/services">Services</NavItem>
-            <NavItem href="/contact">Contact</NavItem>
-          </nav>
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -68,12 +61,12 @@ export default function Header() {
           </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon">
                 <MenuIcon className="h-5 w-5" />
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4 mt-4">
                 <NavItem href="/" onClick={closeSheet}>Accueil</NavItem>
                 <NavItem href="/about" onClick={closeSheet}>À propos</NavItem>
