@@ -5,9 +5,9 @@ const ServiceCard = ({ title, description, imageUrl, isReversed }) => (
     <div className="w-full lg:w-1/2 h-64 lg:h-96">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
     </div>
-    <div className="w-full lg:w-1/2 bg-white p-6 flex flex-col justify-center">
-      <h2 className="text-4xl font-extrabold text-blue-300 mb-4 text-center">{title}</h2>
-      <p className="text-gray-700 text-sm text-center" >{description}</p>
+    <div className="w-full lg:w-1/2 bg-white dark:bg-black p-6 flex flex-col justify-center">
+      <h2 className="text-4xl font-extrabold text-blue-300 dark:text-blue-300 mb-4 text-center">{title}</h2>
+      <p className="text-gray-700 dark:text-gray-300 text-sm text-center">{description}</p>
     </div>
   </div>
 );
