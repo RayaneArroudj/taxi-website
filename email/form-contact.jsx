@@ -18,7 +18,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from '@/hooks/use-toast'
 import { sendEmail } from '../actions/sendEmail'
 
-
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Le nom doit contenir au moins 2 caractères.",
@@ -49,29 +48,40 @@ const ContactForm = () => {
 
   async function onSubmit(values) {
     try {
+      console.log("Submitting form with values:", values);
       const result = await sendEmail({
         ...values,
-        departureAdress: "N/A",
-        arrivalAdress: "N/A",
         transportType: "Contact",
         date: new Date().toISOString(),
         time: new Date().toTimeString(),
       })
       
+      console.log("Result from sendEmail:", result);
+      
       if (result.error) {
+        console.error("Error from sendEmail:", result.error);
         toast({
           title: "Erreur",
           description: result.error,
           variant: "destructive",
         })
-      } else {
+      } else if (result.data) {
+        console.log("Success from sendEmail:", result.data);
         toast({
           title: "Message envoyé",
           description: "Nous vous répondrons dans les plus brefs délais.",
         })
         form.reset()
+      } else {
+        console.warn("Unexpected result from sendEmail:", result);
+        toast({
+          title: "Avertissement",
+          description: "Le message a été envoyé, mais une réponse inattendue a été reçue.",
+          variant: "warning",
+        })
       }
     } catch (error) {
+      console.error("Caught error:", error);
       toast({
         title: "Erreur",
         description: "Une erreur est survenue lors de l'envoi du message.",

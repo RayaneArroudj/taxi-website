@@ -10,8 +10,8 @@ import { adresseVerification, validateMail, validatePhone } from "../lib/utils";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async (formData) => {
-  console.log("running on server");
-  console.log(formData);
+  console.log("Running on server");
+  console.log("Form data received:", formData);
   const {
     departureAdress,
     arrivalAdress,
@@ -25,26 +25,29 @@ export const sendEmail = async (formData) => {
   } = formData;
 
   if (!validateMail(email)) {
+    console.log("Invalid email");
     return {
       error: "L'adresse email renseignée n'est pas valide",
     };
   }
 
   if (!validatePhone(telephone)) {
+    console.log("Invalid phone number");
     return {
       error: "Le numéro de téléphone renseigné n'est pas valide",
     };
   }
 
-  if (departureAdress && arrivalAdress && !adresseVerification(departureAdress, arrivalAdress)) {
+  if (transportType !== "Contact" && departureAdress && arrivalAdress && !adresseVerification(departureAdress, arrivalAdress)) {
+    console.log("Invalid addresses");
     return {
-      error:
-        "L'adresse d'arrivée ne peux pas être similaire à l'adresse de départ",
+      error: "L'adresse d'arrivée ne peut pas être similaire à l'adresse de départ",
     };
   }
 
   let data;
   try {
+    console.log("Sending email...");
     data = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
       to: "lare.axelange.simplon@gmail.com",
@@ -62,7 +65,9 @@ export const sendEmail = async (formData) => {
             telephone,
           }),
     });
+    console.log("Email sent successfully:", data);
   } catch (error) {
+    console.error("Error sending email:", error);
     return {
       error: error.message,
     };
