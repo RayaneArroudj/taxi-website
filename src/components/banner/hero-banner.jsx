@@ -18,28 +18,25 @@ const HeroBanner = () => {
         const currentTheme = theme === 'system' ? systemTheme : theme;
         setCurrentTheme(currentTheme);
 
-        const preloadLight = document.createElement('link');
-        preloadLight.rel = 'preload';
-        preloadLight.as = 'image';
-        preloadLight.href = lightImage;
-        document.head.appendChild(preloadLight);
+        // Préchargement optimisé des images
+        const preloadImage = (src) => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = src;
+            document.head.appendChild(link);
+        };
 
-        const preloadDark = document.createElement('link');
-        preloadDark.rel = 'preload';
-        preloadDark.as = 'image';
-        preloadDark.href = darkImage;
-        document.head.appendChild(preloadDark);
+        preloadImage(lightImage);
+        preloadImage(darkImage);
 
         return () => {
-            document.head.removeChild(preloadLight);
-            document.head.removeChild(preloadDark);
+            const links = document.head.querySelectorAll('link[rel="preload"][as="image"]');
+            links.forEach(link => document.head.removeChild(link));
         };
     }, [theme, systemTheme]);
 
- 
-    if (!mounted) {
-        return null;
-    }
+    if (!mounted) return null;
 
     const imageSrc = currentTheme === 'dark' ? darkImage : lightImage;
 
@@ -52,8 +49,6 @@ const HeroBanner = () => {
                 className="object-cover object-center"
                 priority
                 sizes="100vw"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
             />
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
