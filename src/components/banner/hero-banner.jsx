@@ -1,15 +1,59 @@
-import React from 'react';
+'use client'
+
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useTheme } from 'next-themes';
 import ReservationSection from '../form-reservation/reservation-section';
 
+const lightImage = '/lyon.jpg';
+const darkImage = '/lyoncity.jpg';
+
 const HeroBanner = () => {
+    const { theme, systemTheme } = useTheme();
+    const [currentTheme, setCurrentTheme] = useState('light');
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        const currentTheme = theme === 'system' ? systemTheme : theme;
+        setCurrentTheme(currentTheme);
+
+        const preloadLight = document.createElement('link');
+        preloadLight.rel = 'preload';
+        preloadLight.as = 'image';
+        preloadLight.href = lightImage;
+        document.head.appendChild(preloadLight);
+
+        const preloadDark = document.createElement('link');
+        preloadDark.rel = 'preload';
+        preloadDark.as = 'image';
+        preloadDark.href = darkImage;
+        document.head.appendChild(preloadDark);
+
+        return () => {
+            document.head.removeChild(preloadLight);
+            document.head.removeChild(preloadDark);
+        };
+    }, [theme, systemTheme]);
+
+ 
+    if (!mounted) {
+        return null;
+    }
+
+    const imageSrc = currentTheme === 'dark' ? darkImage : lightImage;
+
     return (
         <div className="relative h-screen w-full">
             <Image
-                src="/lyoncity.jpg"  
+                src={imageSrc}
                 fill
                 alt="City of Lyon"
-                className="object-cover object-center" 
+                className="object-cover object-center"
+                priority
+                sizes="100vw"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="
             />
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
