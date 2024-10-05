@@ -35,7 +35,7 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/logo.jpg" alt="logo" width={40} height={40} className="rounded-full" />
             <span className="hidden font-bold sm:inline-block">
-              Elite-Lyon-Taxi
+              Elite Lyon Taxi
             </span>
           </Link>
         </div>
@@ -69,7 +69,6 @@ export default function Header() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4 mt-4">
                 <NavItem href="/" onClick={closeSheet}>Accueil</NavItem>
-                <NavItem href="/about" onClick={closeSheet}>À propos</NavItem>
                 <NavItem href="/services" onClick={closeSheet}>Services</NavItem>
                 <NavItem href="/contact" onClick={closeSheet}>Contact</NavItem>
               </nav>

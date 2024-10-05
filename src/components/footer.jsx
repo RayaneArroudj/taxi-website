@@ -19,17 +19,17 @@ export default function Footer() {
             <span className="text-2xl font-semibold">Elite Lyon Taxi</span>
           </Link>
           <nav className="space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              A propos
+            <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Services
+            </Link>
+            <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
             </Link>
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               CGV
             </Link>
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Mentions Légales
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
             </Link>
           </nav>
         </div>
