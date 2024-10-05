@@ -1,9 +1,9 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
