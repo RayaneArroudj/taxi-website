@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-white rounded-lg shadow m-4 border">
+    <footer className="bg-white rounded-lg shadow bottom-4 m-4 border">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a
@@ -22,8 +22,8 @@ export default function Footer() {
           </a>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-black-500 sm:mb-0">
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
-                A propos
+              <a href="/" className="hover:underline me-4 md:me-6">
+                Réservation
               </a>
             </li>
             <li>
@@ -32,12 +32,15 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                href="/mentions-legales"
+                className="hover:underline me-4 md:me-6"
+              >
                 Mentions Légales
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/contact" className="hover:underline">
                 Contact
               </a>
             </li>

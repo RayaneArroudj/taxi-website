@@ -70,7 +70,7 @@ export default function ReservationSection() {
   return (
     <div
       style={{
-        backgroundImage: `url("/lyon2.webp")`,
+        backgroundImage: `url("/lyon.jpg")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "600px",
