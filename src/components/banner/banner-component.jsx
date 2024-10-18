@@ -7,22 +7,28 @@ export default function BannerComponent() {
 
   return (
     <section className="bg-gradient-to-br from-blue-300 to-blue-500 overflow-hidden py-4">
-      <div 
+      <div
         className="animate-scroll flex"
         style={{
           width: `${contentWidth * 2}px`, // Double de la largeur du contenu
         }}
       >
         {[...Array(3)].map((_, index) => (
-          <div key={index} className="flex items-center" style={{ width: `${contentWidth}px` }}>
+          <div
+            key={index}
+            className="flex items-center"
+            style={{ width: `${contentWidth}px` }}
+          >
             {guaranteeList.map((item) => (
               <div
                 key={item.name}
                 className="flex flex-col items-center text-white mx-6"
-                style={{ width: '200px' }} // Largeur fixe pour chaque élément
+                style={{ width: "auto" }} // Largeur fixe pour chaque élément
               >
                 <div className="text-3xl mb-1">{item.icon}</div>
-                <div className="text-sm font-medium text-center">{item.name}</div>
+                <div className="text-sm font-medium text-center">
+                  {item.name}
+                </div>
               </div>
             ))}
           </div>

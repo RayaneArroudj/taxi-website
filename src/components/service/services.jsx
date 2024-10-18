@@ -1,17 +1,17 @@
-import React from "react";
-import Image from "next/image";
-import { servicesList } from "../../../lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import React from "react";
+import { servicesList } from "../../../lib/data";
 
 export default function Services() {
   return (
     <section className="container mx-auto py-12 space-y-8">
       <h2 className="text-3xl font-bold text-center">Nos Services</h2>
-      <p className="text-center max-w-2xl mx-auto text-muted-foreground">
-        Société de Taxi basée sur Lyon, nous assurons tous vos transports privés,
-        professionnels ou médicaux. Contactez-nous, et un chauffeur de la
-        compagnie vous sera envoyé afin de vous mener à votre destination.
+      <p className="text-center max-w-2xl mx-4 text-muted-foreground sm:mx-auto">
+        Société de Taxi basée sur Lyon, nous assurons tous vos transports
+        privés, professionnels ou médicaux. Contactez-nous, et un chauffeur de
+        la compagnie vous sera envoyé afin de vous mener à votre destination.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {servicesList.map((item, index) => (

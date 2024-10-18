@@ -1,9 +1,9 @@
-'use client'
-import React, { useRef, useState } from "react";
+"use client";
+import { CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import { AnimatePresence } from "framer-motion";
-import { useToast } from "@/hooks/use-toast"
+import React, { useRef, useState } from "react";
 import { sendEmail } from "../../../actions/sendEmail";
-import { Card, CardContent } from "@/components/ui/card";
 import SectionTitle from "../utils-components/section-title";
 import SlideComponent from "../utils-components/slide-component";
 import ContactInformations from "./contact-informations";
@@ -55,7 +55,8 @@ export default function ReservationSection() {
 
     toast({
       title: "Succès",
-      description: "Votre demande a bien été envoyée. Un chauffeur vous contactera par téléphone pour valider votre prise en charge. Merci pour votre confiance !",
+      description:
+        "Votre demande a bien été envoyée. Un chauffeur vous contactera par téléphone pour valider votre prise en charge. Merci pour votre confiance !",
       duration: 5000,
     });
     reference.current?.reset();
@@ -69,33 +70,35 @@ export default function ReservationSection() {
   };
 
   return (
-    <div className="relative bg-cover bg-center h-[600px]" style={{ backgroundImage: `url("/lyon2.webp")` }}>
-
-      <SectionTitle className='text-white'>Commander votre taxi :</SectionTitle>
-      <Card className="w-11/12 md:w-4/5 lg:w-3/4 xl:w-5/6 2xl:w-11/12 mx-auto shadow-lg">
-  <CardContent className="p-6">
-          <AnimatePresence>
-            {!isFirstFormSubmitted ? (
-              <TransportInformations
-                submitTansportInformations={submitTansportInformations}
-                setTransportType={setTransportType}
-                transportType={transportType}
-                data={data}
-                reference={reference}
-              />
-            ) : (
-              <ContactInformations
-                submitIdentificationInformations={submitIdentificationInformations}
-                modificateButton={modificateButton}
-                reference={reference}
-              />
-            )}
-          </AnimatePresence>
-          <div className="flex justify-center gap-5 mt-4">
-            <SlideComponent isFirstFormSubmitted={isFirstFormSubmitted} />
-          </div>
-        </CardContent>
-      </Card>
+    <div
+      className="relative w-full bg-cover bg-center "
+      style={{ backgroundImage: `url("/lyon2.webp")` }}
+    >
+      <SectionTitle className="text-white">Commander votre taxi :</SectionTitle>
+      <CardContent>
+        <AnimatePresence>
+          {!isFirstFormSubmitted ? (
+            <TransportInformations
+              submitTansportInformations={submitTansportInformations}
+              setTransportType={setTransportType}
+              transportType={transportType}
+              data={data}
+              reference={reference}
+            />
+          ) : (
+            <ContactInformations
+              submitIdentificationInformations={
+                submitIdentificationInformations
+              }
+              modificateButton={modificateButton}
+              reference={reference}
+            />
+          )}
+        </AnimatePresence>
+        <div className="flex justify-center gap-5 mt-4">
+          <SlideComponent isFirstFormSubmitted={isFirstFormSubmitted} />
+        </div>
+      </CardContent>
     </div>
   );
 }

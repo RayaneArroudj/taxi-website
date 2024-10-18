@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { IoLocationOutline } from "react-icons/io5";
-import { getCurrentDate } from "../../../lib/utils";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -12,8 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { IoLocationOutline } from "react-icons/io5";
+import { getCurrentDate } from "../../../lib/utils";
 
 export default function TransportInformations({
   submitTansportInformations,
@@ -68,8 +68,8 @@ export default function TransportInformations({
       className="flex flex-col gap-5 w-full"
       ref={reference}
     >
-      <Card className="w-full">
-        <CardContent className="p-6">
+      <Card>
+        <CardContent className="p-6 h-full">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="departureAddress">Adresse de départ</Label>

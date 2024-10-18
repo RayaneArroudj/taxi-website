@@ -1,12 +1,12 @@
-import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
+import React from "react";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
 import { IoIosMail } from "react-icons/io";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 export default function ContactInformations({
   submitIdentificationInformations,
@@ -21,7 +21,7 @@ export default function ContactInformations({
       transition={{ duration: 0.5 }}
       className="w-full"
     >
-      <Card>
+      <Card className="">
         <CardHeader>
           <CardTitle>Informations de contact</CardTitle>
         </CardHeader>
@@ -61,9 +61,9 @@ export default function ContactInformations({
                 </div>
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="flex justify-end space-x-4">
               <Button
                 type="button"
