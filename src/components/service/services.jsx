@@ -29,7 +29,7 @@ export default function Services() {
                 height={40}
               />
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="px-2 py-2">
               <ul className="space-y-2">
                 {item.elements.map((element, i) => (
                   <li key={i} className="flex items-start gap-2">
