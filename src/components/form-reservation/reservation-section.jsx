@@ -1,7 +1,8 @@
 "use client";
+import { CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import { AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
-import toast from "react-hot-toast";
+import React, { useRef, useState } from "react";
 import { sendEmail } from "../../../actions/sendEmail";
 import SectionTitle from "../utils-components/section-title";
 import SlideComponent from "../utils-components/slide-component";
@@ -12,7 +13,7 @@ export default function ReservationSection() {
   const [transportType, setTransportType] = useState(null);
   const [isFirstFormSubmitted, setIsFirstFormSubmitted] = useState(false);
   const [data, setData] = useState({});
-
+  const { toast } = useToast();
   const reference = useRef(null);
 
   const submitTansportInformations = (e) => {
@@ -44,19 +45,20 @@ export default function ReservationSection() {
     const { error } = await sendEmail(updatedData);
 
     if (error) {
-      toast.error(error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: error,
+      });
       return;
     }
 
-    if (data?.error) {
-      toast.error(data.error);
-      return;
-    }
-
-    toast.success(
-      "Votre demande à bien été envoyée, un chauffeur vous contactera par téléphone pour valider votre prise en charge, merci pour votre confiance !",
-      { duration: 5000 }
-    );
+    toast({
+      title: "Succès",
+      description:
+        "Votre demande a bien été envoyée. Un chauffeur vous contactera par téléphone pour valider votre prise en charge. Merci pour votre confiance !",
+      duration: 5000,
+    });
     reference.current?.reset();
     setIsFirstFormSubmitted(false);
     setData({});
@@ -69,6 +71,7 @@ export default function ReservationSection() {
 
   return (
     <div
+<<<<<<< HEAD
       style={{
         backgroundImage: `url("/lyon.jpg")`,
         backgroundSize: "cover",
@@ -76,9 +79,13 @@ export default function ReservationSection() {
         height: "600px",
       }}
       className="flex flex-col gap-5"
+=======
+      className="relative w-full bg-cover bg-center "
+      style={{ backgroundImage: `url("/lyon2.webp")` }}
+>>>>>>> axel
     >
-      <SectionTitle>Commander votre taxi :</SectionTitle>
-      <div className="flex flex-col gap-5 opacity-95 bg-white w-11/12 lg:w-4/6 lg:items-center  place-self-center py-5 px-2 border-2 rounded shadow-inner h-[450px]">
+      <SectionTitle className="text-white">Commander votre taxi :</SectionTitle>
+      <CardContent>
         <AnimatePresence>
           {!isFirstFormSubmitted ? (
             <TransportInformations
@@ -98,10 +105,10 @@ export default function ReservationSection() {
             />
           )}
         </AnimatePresence>
-        <div className="flex justify-center gap-5">
+        <div className="flex justify-center gap-5 mt-4">
           <SlideComponent isFirstFormSubmitted={isFirstFormSubmitted} />
         </div>
-      </div>
+      </CardContent>
     </div>
   );
 }

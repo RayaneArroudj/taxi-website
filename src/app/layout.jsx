@@ -1,8 +1,9 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <Header />
-        {children}
-        <Toaster position="bottom-right" />
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          {children}
+          <Toaster position="bottom-right" />
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
