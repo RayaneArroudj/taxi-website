@@ -21,8 +21,8 @@ export default function ReservationSection() {
     const formData = new FormData(e.target);
 
     const newData = {
-      departureAdress: formData.get("departureAdress"),
-      arrivalAdress: formData.get("arrivalAdress"),
+      departureAddress: formData.get("departureAddress"),
+      arrivalAddress: formData.get("arrivalAddress"),
       transportType: transportType,
       date: formData.get("date"),
       time: formData.get("time"),
@@ -30,6 +30,7 @@ export default function ReservationSection() {
 
     setData(newData);
     setIsFirstFormSubmitted(true);
+    console.log(newData);
   };
 
   const submitIdentificationInformations = async (e) => {
@@ -71,18 +72,8 @@ export default function ReservationSection() {
 
   return (
     <div
-<<<<<<< HEAD
-      style={{
-        backgroundImage: `url("/lyon.jpg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "600px",
-      }}
-      className="flex flex-col gap-5"
-=======
       className="relative w-full bg-cover bg-center "
       style={{ backgroundImage: `url("/lyon2.webp")` }}
->>>>>>> axel
     >
       <SectionTitle className="text-white">Commander votre taxi :</SectionTitle>
       <CardContent>

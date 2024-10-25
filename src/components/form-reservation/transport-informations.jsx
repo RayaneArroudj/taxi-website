@@ -51,6 +51,7 @@ export default function TransportInformations({
     setAddress(value);
     fetchAddress(value, setOptions);
   };
+  console.log("adresse:", departureAddressValue);
 
   const displayAddress = (address, setAddress, setOptions) => {
     setAddress(address);

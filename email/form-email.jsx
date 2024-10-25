@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Body,
   Container,
@@ -6,16 +5,17 @@ import {
   Heading,
   Hr,
   Html,
+  Link,
   Preview,
   Section,
   Text,
-  Link,
 } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
+import React from "react";
 
 export default function FormEmail({
-  departureAdress,
-  arrivalAdress,
+  departureAddress,
+  arrivalAddress,
   transportType,
   date,
   time,
@@ -34,15 +34,20 @@ export default function FormEmail({
                 Nouvelle demande de prise en charge
               </Heading>
               <Section className="p-6 space-y-4">
-                <Text className="font-semibold text-blue-800">Détails de la course :</Text>
-                <Text>
-                  <span className="font-medium">Départ :</span> {departureAdress}
+                <Text className="font-semibold text-blue-800">
+                  Détails de la course :
                 </Text>
                 <Text>
-                  <span className="font-medium">Arrivée :</span> {arrivalAdress}
+                  <span className="font-medium">Départ :</span>{" "}
+                  {departureAddress}
                 </Text>
                 <Text>
-                  <span className="font-medium">Type de transport :</span> {transportType}
+                  <span className="font-medium">Arrivée :</span>{" "}
+                  {arrivalAddress}
+                </Text>
+                <Text>
+                  <span className="font-medium">Type de transport :</span>{" "}
+                  {transportType}
                 </Text>
                 <Text>
                   <span className="font-medium">Date :</span> {date}
@@ -51,7 +56,9 @@ export default function FormEmail({
                   <span className="font-medium">Heure :</span> {time}
                 </Text>
                 <Hr className="border-t border-gray-300 my-4" />
-                <Text className="font-semibold text-blue-800">Coordonnées du client :</Text>
+                <Text className="font-semibold text-blue-800">
+                  Coordonnées du client :
+                </Text>
                 <Text>
                   <span className="font-medium">Téléphone :</span> {telephone}
                 </Text>
@@ -60,10 +67,11 @@ export default function FormEmail({
                 </Text>
               </Section>
               <Section className="bg-gray-100 p-4 text-center text-sm text-gray-600">
-                <Text>
-                  © 2024 Elite Lyon Taxi. Tous droits réservés.
-                </Text>
-                <Link href="https://www.elitelyontaxi.com" className="text-blue-600 hover:underline">
+                <Text>© 2024 Elite Lyon Taxi. Tous droits réservés.</Text>
+                <Link
+                  href="https://www.elitelyontaxi.com"
+                  className="text-blue-600 hover:underline"
+                >
                   www.elitelyontaxi.com
                 </Link>
               </Section>
