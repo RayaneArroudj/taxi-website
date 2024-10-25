@@ -21,7 +21,7 @@ export default function ContactInformations({
       transition={{ duration: 0.5 }}
       className="w-full"
     >
-      <Card className="">
+      <Card className="p-3">
         <CardHeader>
           <CardTitle>Informations de contact</CardTitle>
         </CardHeader>
