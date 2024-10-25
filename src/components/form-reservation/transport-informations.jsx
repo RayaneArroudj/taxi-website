@@ -1,11 +1,19 @@
-"use client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { getCurrentDate } from "../../../lib/utils";
-import Divider from "../utils-components/divider";
-import FormTitle from "../utils-components/form-title";
-import SubmitButton from "../utils-components/submit-button";
 
 export default function TransportInformations({
   submitTansportInformations,
@@ -14,70 +22,40 @@ export default function TransportInformations({
   data,
   reference,
 }) {
-  // stocker les résultats du fetch //
   const [result, setResult] = useState([]);
-  // state gérant l'adresse de départ //
-  const [showDepartureOptions, setshowDepartureOptions] = useState(false);
-  const [departureAdressValue, setdepartureAdressValue] = useState(
-    data.departureAdress || ""
+  const [showDepartureOptions, setShowDepartureOptions] = useState(false);
+  const [departureAddressValue, setDepartureAddressValue] = useState(
+    data.departureAddress || ""
   );
-  //state gérant l'adresse d'arrivée //
-  const [showArrivalOptions, setshowArrivalOptions] = useState(false);
-  const [arrivalAdressValue, setArrivalAdressValue] = useState(
-    data.arrivalAdress || ""
+  const [showArrivalOptions, setShowArrivalOptions] = useState(false);
+  const [arrivalAddressValue, setArrivalAddressValue] = useState(
+    data.arrivalAddress || ""
   );
 
-  // RECHERCHER ET AFFICHER LES RESULTATS D'ADRESSE DE DEPART //
-  const fetchDepartureAdress = async (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setdepartureAdressValue(value);
-    if (e.target.value.length > 3) {
+  const fetchAddress = async (value, setOptions) => {
+    if (value.length > 3) {
       const baseUrl = process.env.NEXT_PUBLIC_GEOLOC;
-
-      const querParams = new URLSearchParams({
-        q: e.target.value,
-      });
-      const URL = `${baseUrl}?${querParams}`;
+      const queryParams = new URLSearchParams({ q: value });
+      const URL = `${baseUrl}?${queryParams}`;
       const response = await fetch(URL);
       const data = await response.json();
       setResult(data.features);
-      setshowDepartureOptions(true);
+      setOptions(true);
     } else {
-      setshowDepartureOptions(false);
+      setOptions(false);
     }
   };
 
-  const displayDepartureAdress = (address) => {
-    setdepartureAdressValue(address);
-    setResult([]);
-    setshowDepartureOptions(false);
-  };
-
-  // RECHERCHER ET AFFICHER LES RESULTATS D'ADRESSE D'ARRIVEE //
-  const fetchArrivalAdress = async (e) => {
-    e.preventDefault();
+  const handleAddressChange = (e, setAddress, setOptions) => {
     const value = e.target.value;
-    setArrivalAdressValue(value);
-    if (e.target.value.length > 3) {
-      const baseUrl = process.env.NEXT_PUBLIC_GEOLOC;
-      const querParams = new URLSearchParams({
-        q: e.target.value,
-      });
-      const URL = `${baseUrl}?${querParams}`;
-      const response = await fetch(URL);
-      const data = await response.json();
-      setResult(data.features);
-      setshowArrivalOptions(true);
-    } else {
-      setshowArrivalOptions(false);
-    }
+    setAddress(value);
+    fetchAddress(value, setOptions);
   };
 
-  const displayArrivalAdress = (address) => {
-    setArrivalAdressValue(address);
+  const displayAddress = (address, setAddress, setOptions) => {
+    setAddress(address);
     setResult([]);
-    setshowArrivalOptions(false);
+    setOptions(false);
   };
 
   return (
@@ -87,127 +65,148 @@ export default function TransportInformations({
       exit={{ x: "-100%" }}
       transition={{ duration: 0.5 }}
       onSubmit={submitTansportInformations}
-      className="flex flex-col gap-5 lg:w-4/6"
+      className="flex flex-col gap-5 w-full"
       ref={reference}
     >
-      {/* SECTION ADRESSE */}
-      <span className="flex justify-center gap-1 items-center relative">
-        <IoLocationOutline className="size-5" />
-        <input
-          className="border-b w-10/12 pl-1 border-b-blue-600"
-          type="text"
-          placeholder="Adresse de départ"
-          name="departureAdress"
-          required
-          onChange={fetchDepartureAdress}
-          value={departureAdressValue}
-        />
-        {showDepartureOptions && (
-          <ul className="border z-10 border-gray-300 bg-white w-full top-full left-0 mt-1 rounded-b absolute">
-            {result.map((address) => (
-              <li
-                key={address.properties.id}
-                className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => displayDepartureAdress(address.properties.label)}
+      <Card>
+        <CardContent className="p-6 h-full">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="departureAddress">Adresse de départ</Label>
+              <div className="relative">
+                <Input
+                  id="departureAddress"
+                  type="text"
+                  placeholder="Adresse de départ"
+                  name="departureAddress"
+                  required
+                  value={departureAddressValue}
+                  onChange={(e) =>
+                    handleAddressChange(
+                      e,
+                      setDepartureAddressValue,
+                      setShowDepartureOptions
+                    )
+                  }
+                  className="pl-10"
+                />
+                <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                {showDepartureOptions && (
+                  <Card className="absolute z-10 w-full mt-1">
+                    <CardContent className="p-0">
+                      <ul className="max-h-60 overflow-auto">
+                        {result.map((address) => (
+                          <li
+                            key={address.properties.id}
+                            className="cursor-pointer p-2 hover:bg-accent"
+                            onClick={() =>
+                              displayAddress(
+                                address.properties.label,
+                                setDepartureAddressValue,
+                                setShowDepartureOptions
+                              )
+                            }
+                          >
+                            {address.properties.label}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="arrivalAddress">Adresse de destination</Label>
+              <div className="relative">
+                <Input
+                  id="arrivalAddress"
+                  type="text"
+                  placeholder="Adresse de destination"
+                  name="arrivalAddress"
+                  required
+                  value={arrivalAddressValue}
+                  onChange={(e) =>
+                    handleAddressChange(
+                      e,
+                      setArrivalAddressValue,
+                      setShowArrivalOptions
+                    )
+                  }
+                  className="pl-10"
+                />
+                <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                {showArrivalOptions && (
+                  <Card className="absolute z-10 w-full mt-1">
+                    <CardContent className="p-0">
+                      <ul className="max-h-60 overflow-auto">
+                        {result.map((address) => (
+                          <li
+                            key={address.properties.id}
+                            className="cursor-pointer p-2 hover:bg-accent"
+                            onClick={() =>
+                              displayAddress(
+                                address.properties.label,
+                                setArrivalAddressValue,
+                                setShowArrivalOptions
+                              )
+                            }
+                          >
+                            {address.properties.label}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Type de transport</Label>
+              <Select
+                onValueChange={setTransportType}
+                defaultValue={transportType}
               >
-                {address.properties.label}
-              </li>
-            ))}
-          </ul>
-        )}
-      </span>
-      <span className="flex justify-center gap-1 items-center relative">
-        <IoLocationOutline className="size-5" />
-        <input
-          className="border-b w-10/12 pl-1 border-b-blue-600"
-          type="text"
-          placeholder="Adresse de destination"
-          name="arrivalAdress"
-          required
-          onChange={fetchArrivalAdress}
-          value={arrivalAdressValue}
-        />
-        {showArrivalOptions && (
-          <ul className="border z-10 border-gray-300 bg-white w-full top-full left-0 mt-1 rounded-b absolute">
-            {result.map((address) => (
-              <li
-                key={address.properties.id}
-                className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => displayArrivalAdress(address.properties.label)}
-              >
-                {address.properties.label}
-              </li>
-            ))}
-          </ul>
-        )}
-      </span>
-      {/* SECTION TYPE DE TRANSPORT */}
-      <div className="flex flex-col gap-3">
-        <FormTitle>Type de transport :</FormTitle>
-        <div className="flex flex-row gap-2 justify-center">
-          <button
-            onClick={() =>
-              transportType === "private"
-                ? setTransportType("")
-                : setTransportType("private")
-            }
-            className={`w-3/12 border-2 border-blue-600 rounded-lg px-3 py-2 text-blue-600 cursor-pointer hover:bg-blue-500 hover:text-white ${
-              transportType === "private" ? "bg-blue-400 text-white" : ""
-            }`}
-          >
-            Privé
-          </button>
-          <button
-            onClick={() =>
-              transportType === "profesional"
-                ? setTransportType("")
-                : setTransportType("profesional")
-            }
-            className={`w-4/12 border-2 border-blue-600 rounded-lg px-3 py-2 text-blue-600 cursor-pointer hover:bg-blue-500 hover:text-white ${
-              transportType === "profesional" ? "bg-blue-400 text-white" : ""
-            }`}
-          >
-            Professionnel
-          </button>
-          <button
-            onClick={() =>
-              transportType === "medical"
-                ? setTransportType("")
-                : setTransportType("medical")
-            }
-            className={`w-3/12 border-2 border-blue-600 rounded-lg px-3 py-2 text-blue-600 cursor-pointer hover:bg-blue-500 hover:text-white ${
-              transportType === "medical" ? "bg-blue-400 text-white" : ""
-            }`}
-          >
-            Médical
-          </button>
-        </div>
-      </div>
-      {/* SECTION DATE ET HEURE */}
-      <FormTitle>Date et heure de prise en charge:</FormTitle>
-      <div className="flex justify-around">
-        <input
-          type="date"
-          name="date"
-          placeholder="Date"
-          className="border-2 pl-2 py-1 border-blue-600 text-blue-600 rounded-lg"
-          required
-          min={getCurrentDate()}
-          defaultValue={data.date || ""}
-        />
-        <input
-          type="time"
-          name="time"
-          className="border-2 pl-2 py-1 border-blue-600 text-blue-600 rounded-lg"
-          required
-          defaultValue={data.time || ""}
-        />
-      </div>
-      <div className="flex flex-col gap-5">
-        <Divider />
-        {/* VALIDATION DU FORMULAIRE */}
-        <SubmitButton>Valider</SubmitButton>
-      </div>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionnez le type de transport" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="private">Privé</SelectItem>
+                  <SelectItem value="professional">Professionnel</SelectItem>
+                  <SelectItem value="medical">Médical</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Date et heure de prise en charge</Label>
+              <div className="flex space-x-2">
+                <Input
+                  type="date"
+                  name="date"
+                  required
+                  min={getCurrentDate()}
+                  defaultValue={data.date || ""}
+                />
+                <Input
+                  type="time"
+                  name="time"
+                  required
+                  defaultValue={data.time || ""}
+                />
+              </div>
+            </div>
+
+            <Separator />
+
+            <Button type="submit" className="w-full">
+              Valider
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </motion.form>
   );
 }

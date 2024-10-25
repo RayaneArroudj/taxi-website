@@ -1,10 +1,20 @@
-export default function SubmitButton({ children }) {
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+export default function SubmitButton({ children, className, ...props }) {
   return (
-    <button
+    <Button
       type="submit"
-      className="border-2 w-3/12 mr-5 self-end border-blue-500 rounded-lg px-3 py-2 text-blue-500 cursor-pointer hover:bg-blue-500 hover:text-white"
+      variant="outline"
+      className={cn(
+        "w-full sm:w-auto",
+        "transition-colors duration-200",
+        className
+      )}
+      {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 }
