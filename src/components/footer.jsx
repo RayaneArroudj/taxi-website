@@ -55,8 +55,22 @@ export default function Footer() {
           </Link>
           . Tous droits réservés.
         </div>
-        <div className="text-center text-sm text-muted-foreground mt-2">
-          Powered By <span className="font-bold italic">Fluxx Web Agency.</span>
+        <div className="text-center text-sm text-muted-foreground mt-2 flex items-center justify-center gap-2">
+          Powered By 
+          <Link 
+            href="https://fluxx-agency.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/logo-fluxx.png"
+              alt="Fluxx Web Agency"
+              width={80}
+              height={30}
+              className="object-contain"
+            />
+          </Link>
         </div>
       </div>
     </footer>
