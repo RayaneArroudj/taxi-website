@@ -13,7 +13,6 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
-import { getCurrentDate } from "../../../lib/utils";
 
 export default function TransportInformations({
   submitTansportInformations,
@@ -22,41 +21,44 @@ export default function TransportInformations({
   data,
   reference,
 }) {
-  const [result, setResult] = useState([]);
-  const [showDepartureOptions, setShowDepartureOptions] = useState(false);
   const [departureAddressValue, setDepartureAddressValue] = useState(
     data.departureAddress || ""
   );
-  const [showArrivalOptions, setShowArrivalOptions] = useState(false);
   const [arrivalAddressValue, setArrivalAddressValue] = useState(
     data.arrivalAddress || ""
   );
+  const [showDepartureOptions, setShowDepartureOptions] = useState(false);
+  const [showArrivalOptions, setShowArrivalOptions] = useState(false);
+  const [result, setResult] = useState([]);
 
-  const fetchAddress = async (value, setOptions) => {
-    if (value.length > 3) {
-      const baseUrl = process.env.NEXT_PUBLIC_GEOLOC;
-      const queryParams = new URLSearchParams({ q: value });
-      const URL = `${baseUrl}?${queryParams}`;
-      const response = await fetch(URL);
-      const data = await response.json();
-      setResult(data.features);
-      setOptions(true);
+  const handleAddressChange = async (e, setValue, setShowOptions) => {
+    const value = e.target.value;
+    setValue(value);
+
+    if (value.length >= 3) {
+      try {
+        const response = await fetch(
+          `https://api-adresse.data.gouv.fr/search/?q=${value}&limit=5`
+        );
+        const data = await response.json();
+        setResult(data.features);
+        setShowOptions(true);
+      } catch (error) {
+        console.error("Erreur lors de la recherche d'adresse:", error);
+      }
     } else {
-      setOptions(false);
+      setShowOptions(false);
     }
   };
 
-  const handleAddressChange = (e, setAddress, setOptions) => {
-    const value = e.target.value;
-    setAddress(value);
-    fetchAddress(value, setOptions);
+  const displayAddress = (address, setValue, setShowOptions) => {
+    setValue(address);
+    setShowOptions(false);
   };
-  console.log("adresse:", departureAddressValue);
 
-  const displayAddress = (address, setAddress, setOptions) => {
-    setAddress(address);
-    setResult([]);
-    setOptions(false);
+  const getCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
   };
 
   return (
@@ -73,7 +75,12 @@ export default function TransportInformations({
         <CardContent className="p-6 h-full">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="departureAddress">Adresse de départ</Label>
+              <Label 
+                htmlFor="departureAddress" 
+                className="font-medium text-sm tracking-wide"
+              >
+                Adresse de départ
+              </Label>
               <div className="relative">
                 <Input
                   id="departureAddress"
@@ -89,7 +96,7 @@ export default function TransportInformations({
                       setShowDepartureOptions
                     )
                   }
-                  className="pl-10"
+                  className="pl-10 font-normal"
                 />
                 <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 {showDepartureOptions && (
@@ -99,7 +106,7 @@ export default function TransportInformations({
                         {result.map((address) => (
                           <li
                             key={address.properties.id}
-                            className="cursor-pointer p-2 hover:bg-accent"
+                            className="cursor-pointer p-2 hover:bg-accent text-sm font-normal"
                             onClick={() =>
                               displayAddress(
                                 address.properties.label,
@@ -119,7 +126,12 @@ export default function TransportInformations({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="arrivalAddress">Adresse de destination</Label>
+              <Label 
+                htmlFor="arrivalAddress" 
+                className="font-medium text-sm tracking-wide"
+              >
+                Adresse de destination
+              </Label>
               <div className="relative">
                 <Input
                   id="arrivalAddress"
@@ -135,7 +147,7 @@ export default function TransportInformations({
                       setShowArrivalOptions
                     )
                   }
-                  className="pl-10"
+                  className="pl-10 font-normal"
                 />
                 <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 {showArrivalOptions && (
@@ -145,7 +157,7 @@ export default function TransportInformations({
                         {result.map((address) => (
                           <li
                             key={address.properties.id}
-                            className="cursor-pointer p-2 hover:bg-accent"
+                            className="cursor-pointer p-2 hover:bg-accent text-sm font-normal"
                             onClick={() =>
                               displayAddress(
                                 address.properties.label,
@@ -165,24 +177,34 @@ export default function TransportInformations({
             </div>
 
             <div className="space-y-2">
-              <Label>Type de transport</Label>
+              <Label className="font-medium text-sm tracking-wide">
+                Type de transport
+              </Label>
               <Select
                 onValueChange={setTransportType}
                 defaultValue={transportType}
               >
-                <SelectTrigger>
+                <SelectTrigger className="font-normal">
                   <SelectValue placeholder="Sélectionnez le type de transport" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="private">Privé</SelectItem>
-                  <SelectItem value="professional">Professionnel</SelectItem>
-                  <SelectItem value="medical">Médical</SelectItem>
+                  <SelectItem value="private" className="font-normal">
+                    Privé
+                  </SelectItem>
+                  <SelectItem value="professional" className="font-normal">
+                    Professionnel
+                  </SelectItem>
+                  <SelectItem value="medical" className="font-normal">
+                    Médical
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label>Date et heure de prise en charge</Label>
+              <Label className="font-medium text-sm tracking-wide">
+                Date et heure de prise en charge
+              </Label>
               <div className="flex space-x-2">
                 <Input
                   type="date"
@@ -190,19 +212,21 @@ export default function TransportInformations({
                   required
                   min={getCurrentDate()}
                   defaultValue={data.date || ""}
+                  className="font-normal"
                 />
                 <Input
                   type="time"
                   name="time"
                   required
                   defaultValue={data.time || ""}
+                  className="font-normal"
                 />
               </div>
             </div>
 
             <Separator />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full font-medium tracking-wide">
               Valider
             </Button>
           </div>

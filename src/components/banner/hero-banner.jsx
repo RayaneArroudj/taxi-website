@@ -55,17 +55,17 @@ const HeroBanner = () => {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
         <div className="text-center xs:mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 ">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4">
             <span className="text-blue-300">ELITE</span> LYON TAXI
           </h1>
-          <p className="xs:text-xl md:text-2xl mb-4">
+          <p className="text-xl md:text-2xl mb-4 font-medium tracking-wide uppercase">
             SPÉCIALISTE DU TRANSPORT VTC TAXI
           </p>
-          <p className="text-lg md:text-xl pb-2">
+          <p className="text-lg md:text-xl pb-2 font-light tracking-wide">
             Lyon - Rhône-Alpes - France Entière
           </p>
         </div>
-        <div className="">
+        <div>
           <ReservationSection />
         </div>
       </div>

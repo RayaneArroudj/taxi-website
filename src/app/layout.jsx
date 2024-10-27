@@ -1,11 +1,30 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
+import localFont from 'next/font/local';
 
-const inter = Inter({ subsets: ["latin"] });
+const satoshi = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Satoshi-Regular.woff2',  // Chemin corrigé
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Satoshi-Medium.woff2',   // Chemin corrigé
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Satoshi-Bold.woff2',     // Chemin corrigé
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+  variable: '--font-satoshi',
+});
 
 export const metadata = {
   icons: {
@@ -17,8 +36,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr">
-      <body className={inter.className}>
+    <html lang="fr" className={satoshi.variable}>
+      <body className="font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

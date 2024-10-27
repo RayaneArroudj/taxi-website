@@ -16,26 +16,42 @@ const Services = () => {
   return (
     <div className="w-full">
       <ServiceCard
-        title="TRANSPORT POUR LES PARTICULIERS"
-        description="Pour profiter d'un transport pour les particuliers à Lyon et ses alentours, n'hesitez pas à contacter ELITE LYON TAXI, nous serions ravi de vous accueillir parmi nous."
+        title={<span className="text-2xl font-bold tracking-tight">TRANSPORT POUR LES PARTICULIERS</span>}
+        description={
+          <p className="font-normal tracking-wide">
+            Pour profiter d'un transport pour les particuliers à Lyon et ses alentours, n'hesitez pas à contacter ELITE LYON TAXI, nous serions ravi de vous accueillir parmi nous.
+          </p>
+        }
         imageUrl="/taxi1.jpg"
         isReversed={false}
       />
       <ServiceCard
-        title="TRANSPORT POUR LES PROFESSIONNELS"
-        description="Choissisez le confort d'un taxi lors de vos deplacements professionnels."
+        title={<span className="text-2xl font-bold tracking-tight">TRANSPORT POUR LES PROFESSIONNELS</span>}
+        description={
+          <p className="font-normal tracking-wide">
+            Choissisez le confort d'un taxi lors de vos deplacements professionnels.
+          </p>
+        }
         imageUrl="/taxi2.jpg"
         isReversed={true}
       />
       <ServiceCard
-        title="TRANSPORT SCOLAIRE DOMICILE ÉCOLE"
-        description="Notre chauffeur professionnel conduit vos enfants en toutes securités à leurs activités lorsque vous n'êtes pas disponible."
+        title={<span className="text-2xl font-bold tracking-tight">TRANSPORT SCOLAIRE DOMICILE ÉCOLE</span>}
+        description={
+          <p className="font-normal tracking-wide">
+            Notre chauffeur professionnel conduit vos enfants en toutes securités à leurs activités lorsque vous n'êtes pas disponible.
+          </p>
+        }
         imageUrl="/taxi3.jpg"
         isReversed={false}
       />
       <ServiceCard
-        title="TRANSFERT VERS AÉROPORTS - GARES"
-        description="Le taxi est une solution simple, confortable et pratique, qui vous permet de répondre à tous vos besoins de déplacements, qu'ils soient privés ou professionnels, en vous garantissant un service personnalisé et efficace."
+        title={<span className="text-2xl font-bold tracking-tight">TRANSFERT VERS AÉROPORTS - GARES</span>}
+        description={
+          <p className="font-normal tracking-wide">
+            Le taxi est une solution simple, confortable et pratique, qui vous permet de répondre à tous vos besoins de déplacements, qu'ils soient privés ou professionnels, en vous garantissant un service personnalisé et efficace.
+          </p>
+        }
         imageUrl="/taxi4.jpg"
         isReversed={true}
       />

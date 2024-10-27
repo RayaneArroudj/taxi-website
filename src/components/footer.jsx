@@ -17,14 +17,14 @@ export default function Footer() {
                 width={50}
                 height={50}
               />
-              <span className="text-2xl font-semibold">Elite Lyon Taxi</span>
+              <span className="text-2xl font-bold tracking-tight">Elite Lyon Taxi</span>
             </Link>
           </div>
-          <div className="flex flex-col sm:flex-row sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:gap-6">
             <div>
               <Link
                 href="/services"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors "
+                className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors"
               >
                 Services
               </Link>
@@ -32,7 +32,7 @@ export default function Footer() {
             <div>
               <Link
                 href="/contact"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors"
               >
                 Contact
               </Link>
@@ -40,7 +40,7 @@ export default function Footer() {
             <div>
               <Link
                 href="/mentions-legales"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors"
               >
                 Mentions Légales
               </Link>
@@ -48,14 +48,14 @@ export default function Footer() {
           </div>
         </div>
         <Separator className="my-8" />
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm font-normal tracking-wide text-muted-foreground">
           © {new Date().getFullYear()}{" "}
           <Link href="/" className="hover:underline">
             Elite Lyon Taxi™
           </Link>
           . Tous droits réservés.
         </div>
-        <div className="text-center text-sm text-muted-foreground mt-2 flex items-center justify-center gap-2">
+        <div className="text-center text-sm font-normal tracking-wide text-muted-foreground mt-2 flex items-center justify-center gap-2">
           Powered By 
           <Link 
             href="https://fluxx-agency.com" 
