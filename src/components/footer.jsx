@@ -39,15 +39,7 @@ export default function Footer() {
             </div>
             <div>
               <Link
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                CGV
-              </Link>
-            </div>
-            <div>
-              <Link
-                href="#"
+                href="/mentions-legales"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Mentions Légales
