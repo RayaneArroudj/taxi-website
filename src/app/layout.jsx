@@ -1,29 +1,29 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import "./globals.css";
-import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
-import localFont from 'next/font/local';
+import { ThemeProvider } from "next-themes";
+import localFont from "next/font/local";
+import "./globals.css";
 
 const satoshi = localFont({
   src: [
     {
-      path: '../../public/fonts/Satoshi-Regular.woff2',  // Chemin corrigé
-      weight: '400',
-      style: 'normal',
+      path: "../../public/fonts/Satoshi-Regular.woff2", // Chemin corrigé
+      weight: "400",
+      style: "normal",
     },
     {
-      path: '../../public/fonts/Satoshi-Medium.woff2',   // Chemin corrigé
-      weight: '500',
-      style: 'normal',
+      path: "../../public/fonts/Satoshi-Medium.woff2", // Chemin corrigé
+      weight: "500",
+      style: "normal",
     },
     {
-      path: '../../public/fonts/Satoshi-Bold.woff2',     // Chemin corrigé
-      weight: '700',
-      style: 'normal',
-    }
+      path: "../../public/fonts/Satoshi-Bold.woff2", // Chemin corrigé
+      weight: "700",
+      style: "normal",
+    },
   ],
-  variable: '--font-satoshi',
+  variable: "--font-satoshi",
 });
 
 export const metadata = {

@@ -71,10 +71,7 @@ export default function ReservationSection() {
   };
 
   return (
-    <div
-      className="relative w-full bg-cover bg-center"
-      style={{ backgroundImage: `url("/lyon2.webp")` }}
-    >
+    <>
       <SectionTitle className="text-white font-bold tracking-wide text-2xl md:text-3xl">
         Commander votre taxi :
       </SectionTitle>
@@ -91,7 +88,9 @@ export default function ReservationSection() {
             />
           ) : (
             <ContactInformations
-              submitIdentificationInformations={submitIdentificationInformations}
+              submitIdentificationInformations={
+                submitIdentificationInformations
+              }
               modificateButton={modificateButton}
               reference={reference}
               className="space-y-4"
@@ -99,12 +98,12 @@ export default function ReservationSection() {
           )}
         </AnimatePresence>
         <div className="flex justify-center gap-5 mt-4">
-          <SlideComponent 
+          <SlideComponent
             isFirstFormSubmitted={isFirstFormSubmitted}
             className="font-medium text-sm"
           />
         </div>
       </CardContent>
-    </div>
+    </>
   );
 }

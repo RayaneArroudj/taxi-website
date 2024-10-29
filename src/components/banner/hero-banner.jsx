@@ -5,8 +5,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReservationSection from "../form-reservation/reservation-section";
 
-const lightImage = "/lyon.jpg";
-const darkImage = "/lyoncity.jpg";
+const lightImage = "/lyon.avif";
+const darkImage = "/lyoncity.avif";
 
 const HeroBanner = () => {
   const { theme, systemTheme } = useTheme();
@@ -15,27 +15,8 @@ const HeroBanner = () => {
 
   useEffect(() => {
     setMounted(true);
-    const currentTheme = theme === "system" ? systemTheme : theme;
-    setCurrentTheme(currentTheme);
-
-    // Préchargement optimisé des images
-    const preloadImage = (src) => {
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = "image";
-      link.href = src;
-      document.head.appendChild(link);
-    };
-
-    preloadImage(lightImage);
-    preloadImage(darkImage);
-
-    return () => {
-      const links = document.head.querySelectorAll(
-        'link[rel="preload"][as="image"]'
-      );
-      links.forEach((link) => document.head.removeChild(link));
-    };
+    const activeTheme = theme === "system" ? systemTheme : theme;
+    setCurrentTheme(activeTheme);
   }, [theme, systemTheme]);
 
   if (!mounted) return null;
@@ -50,7 +31,8 @@ const HeroBanner = () => {
         alt="City of Lyon"
         className="object-cover object-center"
         priority
-        sizes="100vw"
+        loading="eager"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
       />
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
