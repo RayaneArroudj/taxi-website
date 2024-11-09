@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const { fontFamily } = require('tailwindcss/defaultTheme')
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 module.exports = {
   darkMode: ["class"],
@@ -11,9 +11,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-satoshi)', ...fontFamily.sans],
-        body: ['var(--font-satoshi)', ...fontFamily.sans],
-        sans: ['var(--font-satoshi)', ...fontFamily.sans],
+        sans: ["var(--font-satoshi)", ...fontFamily.sans],
+        body: ["var(--font-satoshi)", ...fontFamily.sans],
+        sans: ["var(--font-satoshi)", ...fontFamily.sans],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -70,6 +70,10 @@ module.exports = {
       screens: {
         xs: "390px",
       },
+      purge: [
+        "./src/pages//*.{js,ts,jsx,tsx}",
+        "./src/components//*.{js,ts,jsx,tsx}",
+      ],
     },
   },
   plugins: [require("tailwindcss-animate")],

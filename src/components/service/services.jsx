@@ -17,10 +17,12 @@ export default function Services() {
           la compagnie vous sera envoyé afin de vous mener à votre destination.
         </p>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {servicesList.map((item, index) => (
-          <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+          <Card
+            key={index}
+            className="overflow-hidden hover:shadow-lg transition-shadow"
+          >
             <CardHeader className="bg-primary/10 dark:bg-primary/20 relative pb-12">
               <div className="flex items-center gap-3">
                 <span className="text-2xl text-primary">{item.icon}</span>

@@ -1,7 +1,6 @@
+// TransportInformations.jsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -10,9 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { Label } from "@radix-ui/react-label";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-import { IoLocationOutline } from "react-icons/io5";
+import React from "react";
+import { AddressInput } from "../AddressInput";
+import { DateTimeInput } from "../DateTimeInput";
 
 export default function TransportInformations({
   submitTansportInformations,
@@ -21,45 +23,29 @@ export default function TransportInformations({
   data,
   reference,
 }) {
-  const [departureAddressValue, setDepartureAddressValue] = useState(
-    data.departureAddress || ""
-  );
-  const [arrivalAddressValue, setArrivalAddressValue] = useState(
-    data.arrivalAddress || ""
-  );
-  const [showDepartureOptions, setShowDepartureOptions] = useState(false);
-  const [showArrivalOptions, setShowArrivalOptions] = useState(false);
-  const [result, setResult] = useState([]);
+  const {
+    addressValue: departureAddressValue,
+    setAddressValue: setDepartureAddressValue,
+    showOptions: showDepartureOptions,
+    setShowOptions: setShowDepartureOptions,
+    results: departureResults,
+    handleAddressChange: handleDepartureAddressChange,
+  } = useAddressAutocomplete(data?.departureAddress);
 
-  const handleAddressChange = async (e, setValue, setShowOptions) => {
-    const value = e.target.value;
-    setValue(value);
+  const {
+    addressValue: arrivalAddressValue,
+    setAddressValue: setArrivalAddressValue,
+    showOptions: showArrivalOptions,
+    setShowOptions: setShowArrivalOptions,
+    results: arrivalResults,
+    handleAddressChange: handleArrivalAddressChange,
+  } = useAddressAutocomplete(data?.arrivalAddress);
 
-    if (value.length >= 3) {
-      try {
-        const response = await fetch(
-          `https://api-adresse.data.gouv.fr/search/?q=${value}&limit=5`
-        );
-        const data = await response.json();
-        setResult(data.features);
-        setShowOptions(true);
-      } catch (error) {
-        console.error("Erreur lors de la recherche d'adresse:", error);
-      }
-    } else {
-      setShowOptions(false);
-    }
-  };
-
-  const displayAddress = (address, setValue, setShowOptions) => {
-    setValue(address);
-    setShowOptions(false);
-  };
-
-  const getCurrentDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
+  const transportTypes = [
+    { value: "private", label: "Privé" },
+    { value: "professional", label: "Professionnel" },
+    { value: "medical", label: "Médical" },
+  ];
 
   return (
     <motion.form
@@ -72,164 +58,57 @@ export default function TransportInformations({
       ref={reference}
     >
       <Card>
-        <CardContent className="p-6 h-full">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label 
-                htmlFor="departureAddress" 
-                className="font-medium text-sm tracking-wide"
-              >
-                Adresse de départ
-              </Label>
-              <div className="relative">
-                <Input
-                  id="departureAddress"
-                  type="text"
-                  placeholder="Adresse de départ"
-                  name="departureAddress"
-                  required
-                  value={departureAddressValue}
-                  onChange={(e) =>
-                    handleAddressChange(
-                      e,
-                      setDepartureAddressValue,
-                      setShowDepartureOptions
-                    )
-                  }
-                  className="pl-10 font-normal"
-                />
-                <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                {showDepartureOptions && (
-                  <Card className="absolute z-10 w-full mt-1">
-                    <CardContent className="p-0">
-                      <ul className="max-h-60 overflow-auto">
-                        {result.map((address) => (
-                          <li
-                            key={address.properties.id}
-                            className="cursor-pointer p-2 hover:bg-accent text-sm font-normal"
-                            onClick={() =>
-                              displayAddress(
-                                address.properties.label,
-                                setDepartureAddressValue,
-                                setShowDepartureOptions
-                              )
-                            }
-                          >
-                            {address.properties.label}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </div>
+        <CardContent className="p-6 h-full space-y-4">
+          <AddressInput
+            id="departureAddress"
+            label="Adresse de départ"
+            value={departureAddressValue}
+            onChange={handleDepartureAddressChange}
+            showOptions={showDepartureOptions}
+            setShowOptions={setShowDepartureOptions}
+            results={departureResults}
+            setAddressValue={setDepartureAddressValue}
+          />
 
-            <div className="space-y-2">
-              <Label 
-                htmlFor="arrivalAddress" 
-                className="font-medium text-sm tracking-wide"
-              >
-                Adresse de destination
-              </Label>
-              <div className="relative">
-                <Input
-                  id="arrivalAddress"
-                  type="text"
-                  placeholder="Adresse de destination"
-                  name="arrivalAddress"
-                  required
-                  value={arrivalAddressValue}
-                  onChange={(e) =>
-                    handleAddressChange(
-                      e,
-                      setArrivalAddressValue,
-                      setShowArrivalOptions
-                    )
-                  }
-                  className="pl-10 font-normal"
-                />
-                <IoLocationOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                {showArrivalOptions && (
-                  <Card className="absolute z-10 w-full mt-1">
-                    <CardContent className="p-0">
-                      <ul className="max-h-60 overflow-auto">
-                        {result.map((address) => (
-                          <li
-                            key={address.properties.id}
-                            className="cursor-pointer p-2 hover:bg-accent text-sm font-normal"
-                            onClick={() =>
-                              displayAddress(
-                                address.properties.label,
-                                setArrivalAddressValue,
-                                setShowArrivalOptions
-                              )
-                            }
-                          >
-                            {address.properties.label}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </div>
+          <AddressInput
+            id="arrivalAddress"
+            label="Adresse de destination"
+            value={arrivalAddressValue}
+            onChange={handleArrivalAddressChange}
+            showOptions={showArrivalOptions}
+            setShowOptions={setShowArrivalOptions}
+            results={arrivalResults}
+            setAddressValue={setArrivalAddressValue}
+          />
 
-            <div className="space-y-2">
-              <Label className="font-medium text-sm tracking-wide">
-                Type de transport
-              </Label>
-              <Select
-                onValueChange={setTransportType}
-                defaultValue={transportType}
-              >
-                <SelectTrigger className="font-normal">
-                  <SelectValue placeholder="Sélectionnez le type de transport" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="private" className="font-normal">
-                    Privé
+          <div className="space-y-2">
+            <Label className="font-medium text-sm tracking-wide">
+              Type de transport
+            </Label>
+            <Select
+              onValueChange={setTransportType}
+              defaultValue={transportType}
+            >
+              <SelectTrigger className="font-normal">
+                <SelectValue placeholder="Sélectionnez le type de transport" />
+              </SelectTrigger>
+              <SelectContent>
+                {transportTypes.map(({ value, label }) => (
+                  <SelectItem key={value} value={value} className="font-normal">
+                    {label}
                   </SelectItem>
-                  <SelectItem value="professional" className="font-normal">
-                    Professionnel
-                  </SelectItem>
-                  <SelectItem value="medical" className="font-normal">
-                    Médical
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="font-medium text-sm tracking-wide">
-                Date et heure de prise en charge
-              </Label>
-              <div className="flex space-x-2">
-                <Input
-                  type="date"
-                  name="date"
-                  required
-                  min={getCurrentDate()}
-                  defaultValue={data.date || ""}
-                  className="font-normal"
-                />
-                <Input
-                  type="time"
-                  name="time"
-                  required
-                  defaultValue={data.time || ""}
-                  className="font-normal"
-                />
-              </div>
-            </div>
-
-            <Separator />
-
-            <Button type="submit" className="w-full font-medium tracking-wide">
-              Valider
-            </Button>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
+
+          <DateTimeInput defaultDate={data?.date} defaultTime={data?.time} />
+
+          <Separator />
+
+          <Button type="submit" className="w-full font-medium tracking-wide">
+            Valider
+          </Button>
         </CardContent>
       </Card>
     </motion.form>

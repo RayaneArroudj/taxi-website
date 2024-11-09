@@ -11,19 +11,23 @@ const satoshi = localFont({
       path: "../../public/fonts/Satoshi-Regular.woff2", // Chemin corrigé
       weight: "400",
       style: "normal",
+      display: "swap",
     },
     {
       path: "../../public/fonts/Satoshi-Medium.woff2", // Chemin corrigé
       weight: "500",
       style: "normal",
+      display: "swap",
     },
     {
       path: "../../public/fonts/Satoshi-Bold.woff2", // Chemin corrigé
       weight: "700",
       style: "normal",
+      display: "swap",
     },
   ],
   variable: "--font-satoshi",
+  preload: true,
 });
 
 export const metadata = {
